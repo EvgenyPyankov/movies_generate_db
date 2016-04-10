@@ -1,0 +1,32 @@
+drop table movies_genres
+drop table movies_actors
+drop table movies_ratings
+drop table movies
+drop table genres
+drop table ratings
+drop table actors
+
+
+Create table genres(id NUMBER(10) PRIMARY KEY, name VARCHAR2(20))
+Create table actors(id NUMBER(10) PRIMARY KEY, gender VARCHAR2(1), name VARCHAR2(20), surname VARCHAR2(20))
+Create table ratings(id NUMBER(10) PRIMARY KEY, name VARCHAR2(20))
+CREATE table movies(id NUMBER(10) PRIMARY KEY, name VARCHAR(50))
+Create table  movies_genres(
+  movie_id NUMBER(10),
+  genre_id NUMBER(10),
+  CONSTRAINT fk_mg_m FOREIGN KEY(movie_id) REFERENCES movies(id),
+  CONSTRAINT fk_mg_g FOREIGN KEY(genre_id) REFERENCES genres(id)
+  )
+Create table  movies_actors(
+  movie_id NUMBER(10),
+  actor_id NUMBER(10),
+  CONSTRAINT fk_ma_m FOREIGN KEY(movie_id) REFERENCES movies(id),
+  CONSTRAINT fk_ma_a FOREIGN KEY(actor_id) REFERENCES actors(id)
+  )
+Create table  movies_ratings(
+  movie_id NUMBER(10),
+  rating_id NUMBER(10),
+  CONSTRAINT fk_mr_m FOREIGN KEY(movie_id) REFERENCES movies(id),
+  CONSTRAINT fk_mr_r FOREIGN KEY(rating_id) REFERENCES ratings(id)
+  )
+
