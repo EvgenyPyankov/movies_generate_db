@@ -1,8 +1,8 @@
-import java.util.Date;
+
 
 public interface Constants {
-    int MOVIES_NUMBER = 100;
-    int ACTORS_NUMBER = 100;
+    int MOVIES_NUMBER = 1000000;
+    int ACTORS_NUMBER = 1000000;
     int AVERAGE_ACTORS_CAST_MOVIE_NUMBER = 10;
     String[]GENRES_NAMES = {"biographic","drama","lovestory","action","thriller","comedy","arthouse"};
     String[]F_NAMES = {"Sarah","Jennifer","Katniss","Primrose","Monica","Elizabet","Willow","Grace","Victoria","Alma","Rue","Clove","Effie","Kate","Veronika","Germiona","Lily"};

@@ -6,26 +6,9 @@ public class Generator implements Constants {
     Statement stmt;
 
     public Generator() {
-        init();
-    }
-
-    private void init() {
-        try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-        } catch (ClassNotFoundException e) {
-            System.out.println("Where is your Oracle JDBC Driver?");
-            return;
-        }
-
-        try {
-            Locale.setDefault(Locale.ENGLISH);
-            conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "movies", "root");
-            stmt = conn.createStatement();
-        } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console");
-            return;
-        }
-
+        DBController db = new DBController();
+        conn = db.getConnection();
+        stmt=db.getStatement();
     }
 
     public void generate(){
@@ -94,6 +77,7 @@ public class Generator implements Constants {
             ps.setString(3, name);
             ps.setString(4, surname);
             ps.addBatch();
+            System.out.println("Generated actor #"+i);
 
             if (i % batchSize == 0) {
                 ps.executeBatch();
@@ -116,6 +100,7 @@ public class Generator implements Constants {
             ps.setLong(1, i);
             ps.setString(2, name);
             ps.addBatch();
+            System.out.println("Generated movie #"+i);
 
             if (i % batchSize == 0) {
                 ps.executeBatch();
@@ -149,8 +134,10 @@ public class Generator implements Constants {
                 ps.setLong(1,i);
                 ps.setLong(2,index);
                 ps.addBatch();
+                System.out.println("Allocated genres movie #"+i);
             }
             ps.executeBatch();
+
         }
         ps.close();
     }
@@ -171,6 +158,7 @@ public class Generator implements Constants {
                 ps.setLong(1,i);
                 ps.setLong(2,index);
                 ps.addBatch();
+                System.out.println("Allocated actor movie #"+i);
             }
             ps.executeBatch();
         }
@@ -189,6 +177,8 @@ public class Generator implements Constants {
                 ps.setLong(2,j);
                 ps.setInt(3,Rand.getRand(100)+1);
                 ps.addBatch();
+                System.out.println("Allocated ratings movie #"+i);
+
             }
             ps.executeBatch();
         }
