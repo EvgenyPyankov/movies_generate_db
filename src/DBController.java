@@ -83,28 +83,47 @@ public class DBController {
         String query;
         long startTime;
         long endTime;
+//               startTime = System.currentTimeMillis();
+//        getInfoAboutMovie(1000);
+//        endTime = System.currentTimeMillis();
+//        System.out.println(("Get all info about movie: "+(endTime-startTime)+" millis"));
+//
+//        query = "Select name from movies where id =1000";
+//        startTime = System.nanoTime();
+//        stmt.executeQuery(query);
+//        endTime = System.nanoTime();
+//        System.out.println(("Search for a singe field by movie id: "+(endTime-startTime)+" nanos"));
+//
+//        query = "Select * from movies where id =1000";
+//        startTime = System.nanoTime();
+//        stmt.executeQuery(query);
+//        endTime = System.nanoTime();
+//        System.out.println(("Search for all fields by movie id: "+(endTime-startTime)+" nanos"));
+//
+//        query = "Select * from movies where name like 'Movie #1000'";
+//        startTime = System.currentTimeMillis();
+//        stmt.executeQuery(query);
+//        endTime = System.currentTimeMillis();
+//        System.out.println(("Search for all fields by certain field value: "+(endTime-startTime)+" millis"));
+
+        query = "select name from movies where SYS.UTL_MATCH.EDIT_DISTANCE(name, 'Movie #100')<7";
         startTime = System.currentTimeMillis();
-        getInfoAboutMovie(1000);
+        stmt.executeQuery(query);
         endTime = System.currentTimeMillis();
-        System.out.println(("Get all info about movie: "+(endTime-startTime)+" millis"));
+        System.out.println(("Search levenshtein: "+(endTime-startTime)+" millis"));
 
-        query = "Select name from movies where id =1000";
-        startTime = System.nanoTime();
-        stmt.executeQuery(query);
-        endTime = System.nanoTime();
-        System.out.println(("Search for a singe field by movie id: "+(endTime-startTime)+" nanos"));
-
-        query = "Select * from movies where id =1000";
-        startTime = System.nanoTime();
-        stmt.executeQuery(query);
-        endTime = System.nanoTime();
-        System.out.println(("Search for all fields by movie id: "+(endTime-startTime)+" nanos"));
-
-        query = "Select * from movies where name like 'Movie #1000'";
+        query = "select name from movies where SYS.UTL_MATCH.JARO_WINKLER(name, 'Movie #100')<0.85" + "";
         startTime = System.currentTimeMillis();
         stmt.executeQuery(query);
         endTime = System.currentTimeMillis();
-        System.out.println(("Search for all fields by certain field value: "+(endTime-startTime)+" millis"));
+        System.out.println(("Search jaro-winkler: "+(endTime-startTime)+" millis"));
+
+        query = "select name from movies where DLD(name, 'Movie #100')<7";
+        startTime = System.currentTimeMillis();
+        stmt.executeQuery(query);
+        endTime = System.currentTimeMillis();
+        System.out.println(("Search damerau-levenshtein: "+(endTime-startTime)+" millis"));
+
 
     }
 
